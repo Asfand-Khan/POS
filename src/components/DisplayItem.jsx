@@ -10,7 +10,7 @@ const DisplayItem = ({title,value,isRed,isSelectBox,isDisc}) => {
         </select>
       ) : (
       isDisc ? (
-        <input type="text" value={value} className="border-[1px] border-zinc-300 px-1 h-fit w-[20%] rounded-sm m-1" />
+        <input type="text" value={value} className="border-[1px] border-zinc-300 px-1 h-fit w-[20%] rounded-sm m-1" onChange={()=>{}}/>
       ) :(
         <span className={`${isRed ? "text-red-600 text-md font-semibold":"font-normal text-sm text-zinc-500"} `}>{isRed ? `RS. ${value}`:`${value}`}</span>
       )
