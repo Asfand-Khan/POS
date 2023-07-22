@@ -5,7 +5,11 @@ const Product = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = (product) => {
-    dispatch(add(product));
+    const newProduct = {
+      ...product,
+      quantity:1
+    }
+    dispatch(add(newProduct));
   }
   return (
     <div onClick={()=>handleAddToCart(product)} key={product.name} className="flex flex-col items-center justify-center hover:opacity-70 transition">
