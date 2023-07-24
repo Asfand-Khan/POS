@@ -1,4 +1,4 @@
-const DisplayItem = ({title,value,isRed,isSelectBox,isDisc}) => {
+const DisplayItem = ({title,value,isRed,isSelectBox,isDisc,setDiscount}) => {
   return (
     <div className={`flex justify-between m-1 border-[1px] border-zinc-300 rounded-sm px-1 ${isRed ? "items-center":""} ${isSelectBox ? "items-center":""}  ${isDisc ? "items-center":""}`}>
       <span className="text-zinc-700 font-medium text-sm">{title} :</span>
@@ -10,7 +10,7 @@ const DisplayItem = ({title,value,isRed,isSelectBox,isDisc}) => {
         </select>
       ) : (
       isDisc ? (
-        <input type="text" value={value} className="border-[1px] border-zinc-300 px-1 h-fit w-[20%] rounded-sm m-1" onChange={()=>{}}/>
+        <input type="text" value={value} className="border-[1px] border-zinc-300 px-1 h-fit w-[20%] rounded-sm m-1" onChange={(e)=>{setDiscount(e.target.value)}}/>
       ) :(
         <span className={`${isRed ? "text-red-600 text-md font-semibold":"font-normal text-sm text-zinc-500"} `}>{isRed ? `RS. ${value}`:`${value}`}</span>
       )
