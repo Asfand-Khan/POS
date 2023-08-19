@@ -1,10 +1,4 @@
-interface DisplayButtonProps {
-  label: string;
-  onclick: () => void;
-  color: string;
-}
-
-const DisplayButton: React.FC<DisplayButtonProps> = ({
+const DisplayButton = ({
   label,
   onclick,
   color,

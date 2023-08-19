@@ -53,8 +53,23 @@ const cartSlice = createSlice({
 
       return updatedProduct;
     },
-  },
+    reset:(state)=>{
+      state.length = 0;
+    },
+    onHoldToActiveCart:(state,action)=>{
+      return [...state,...action.payload]
+    },
+    addProductsToLocalStorage : (state)=>{
+      localStorage.setItem('cart',JSON.stringify(state))
+    },
+    toggleDiscount: (state, action) => {
+      const item = state.find(item => item.id === action.payload);
+      if (item) {
+        item.isDiscountOpen = !item.isDiscountOpen;
+      }
+    }
+  }
 });
 
-export const { add, remove, incQty, decQty } = cartSlice.actions;
+export const { add, remove, incQty, decQty,reset,onHoldToActiveCart,addProductsToLocalStorage,toggleDiscount } = cartSlice.actions;
 export default cartSlice.reducer;

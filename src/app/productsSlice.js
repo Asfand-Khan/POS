@@ -7,6 +7,7 @@ const initialState = {
   isSuccess: false,
   isError: false,
   message: "",
+  searchResults: []
 };
 
 // creating async thunk for getting products from API
@@ -23,6 +24,7 @@ export const filterProductsByCategory = createAsyncThunk(
   async (category) => {
     if (category === "all") {
       const { data } = await axios.get(`https://fakestoreapi.com/products/`);
+      console.log('all category hit')
       return data;
     } else {
       const { data } = await axios.get(
@@ -36,7 +38,18 @@ export const filterProductsByCategory = createAsyncThunk(
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    searchProductsByName:(state,action)=>{
+      const query = action.payload.toLowerCase();
+      const searchResults = state.data.filter(product =>
+        product.title.toLowerCase().includes(query)
+      );
+      return { ...state, searchResults };
+    },
+    resetSearchResults:(state)=>{
+      return {...state,searchResults:[]}
+    }
+  },
   extraReducers: {
     [getProducts.pending]: (state) => {
       state.isLoading = true;
@@ -69,5 +82,5 @@ const productsSlice = createSlice({
   },
 });
 
-// export const {filterProductsByCategoryOne} = productsSlice.actions;
+export const {searchProductsByName,resetSearchResults} = productsSlice.actions;
 export default productsSlice.reducer;

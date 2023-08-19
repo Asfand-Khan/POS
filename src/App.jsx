@@ -7,7 +7,7 @@ import { getProducts } from "./app/productsSlice";
 
 const App = () => {
   const dispatch = useDispatch();
-  const {data,isLoading} = useSelector(state => state.productReducer);
+  const {data,isLoading,searchResults} = useSelector(state => state.productReducer);
 
   useEffect(()=>{
     // getting products from API -- DISPATCH
@@ -19,7 +19,7 @@ const App = () => {
     <Container>
       <main className="p-3 max-h-screen h-screen overflow-hidden">
         <div className="flex gap-2">
-          <ProductListing products={data} isLoading={isLoading} />
+          <ProductListing products={data} isLoading={isLoading} searchResults={searchResults} />
           <Panel />
         </div>
       </main>

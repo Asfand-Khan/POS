@@ -1,9 +1,24 @@
 import { useSelector } from "react-redux";
 import DisplayButton from "./DisplayButton";
 import DisplayItem from "./DisplayItem";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import {useDispatch} from "react-redux";
+import { addToHold } from "../app/onHoldSlicer";
+import toast from "react-hot-toast";
+import { addProductsToLocalStorage, reset } from "../app/cartSlice";
 
 const Display = () => {
+
+  const dispatch = useDispatch();
+  
+  const date = useMemo(()=>{
+    return new Date();
+  },[]);
+
+  let currentDay= String(date.getDate()).padStart(2, '0');
+  let currentMonth = String(date.getMonth()+1).padStart(2,"0");
+  let currentYear = date.getFullYear();
+
   const [discount,setDiscount] = useState(0);
   const cartProducts = useSelector((state) => state.cartReducer);
 
@@ -24,6 +39,28 @@ const Display = () => {
   const totalOrder = useMemo(()=>{
     return (totalAmount+tax)-discount;
   },[totalAmount,tax,discount]);
+
+  const generateUniqueId = () => {
+    const array = new Uint32Array(1);
+    window.crypto.getRandomValues(array);
+    return array[0].toString(16);
+  };
+
+  const handleHold = useCallback(()=>{
+    dispatch(
+      addToHold({id:generateUniqueId(),date:`${currentDay}/${currentMonth}/${currentYear}`,totalOrder,name:"Guest",cartProducts})
+      );
+
+    toast.success("Cart Added To OnHold/Draft");
+    
+    dispatch(reset())
+  },[dispatch,cartProducts,totalOrder,currentDay,currentMonth,currentYear]);
+
+  const handlePay = () => {
+    const win = window;
+    dispatch(addProductsToLocalStorage());
+    win.open(`/order?from=main`,"order","height=500,width=600");
+  }
 
   return (
     <section className="m-1 border-[1px] border-zinc-300 p-1 rounded-sm">
@@ -46,8 +83,8 @@ const Display = () => {
           onclick={() => {}}
           color="bg-orange-300"
         />
-        <DisplayButton label="Hold" onclick={() => {}} color="bg-zinc-400" />
-        <DisplayButton label="Pay" onclick={() => {}} color="bg-blue-500" />
+        <DisplayButton label="Hold" onclick={() => handleHold()} color="bg-zinc-400" />
+        <DisplayButton label="Pay" onclick={() => handlePay()} color="bg-blue-500" />
         <DisplayButton label="Card" onclick={() => {}} color="bg-blue-500" />
       </div>
     </section>
