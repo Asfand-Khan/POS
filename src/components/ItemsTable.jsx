@@ -14,7 +14,7 @@ const ItemsTable = () => {
   const [open, setOpen] = useState(false);
   const [custName, setCustName] = useState("");
   const [discountPercent, setDiscountPercent] = useState("");
-  const [discountRs, setDiscountRs] = useState("");
+  // const [discountRs, setDiscountRs] = useState("");
   // const [openDiscount, setOpenDiscount] = useState(false);
   const dispatch = useDispatch();
   const cartProducts = useSelector((state) => state.cartReducer);

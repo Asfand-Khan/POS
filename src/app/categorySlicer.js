@@ -10,7 +10,7 @@ const initialState = {
   };
 
 export const productCategories = createAsyncThunk("productCategories",async()=>{
-    const {data} = await axios.get("https://fakestoreapi.com/products/categories");
+    const {data} = await axios.get("https://erp247.net/asfand/api4/public/category");
     return data;
 })
 
