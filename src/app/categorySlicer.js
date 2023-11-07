@@ -10,9 +10,9 @@ const initialState = {
   };
 
 export const productCategories = createAsyncThunk("productCategories",async()=>{
-    const {data} = await axios.get("https://erp247.net/asfand/api4/public/category");
+    const {data} = await axios.get("https://erp247.net/boxyerp/modules/api/category");
     return data;
-})
+});
 
 const categorySlicer = createSlice({
     name:"categories",
